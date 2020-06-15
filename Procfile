@@ -1,1 +1,1 @@
-worker: python Rebbiting/tbiy.py
+worker: python tbiy.py
