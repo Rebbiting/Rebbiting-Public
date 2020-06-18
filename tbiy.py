@@ -90,7 +90,7 @@ while True:
                                 rebbitor = comment.body
                                 print(rebbitor)
                         try:
-                            for commenta in reddit.redditor(rebbitor).comments.new(limit=500):
+                            for commenta in reddit.redditor(rebbitor).comments.new(limit=1000):
                                 t_body = t_body + commenta.body + '\n\n'
                                 li = li + len(commenta.body.split())
                                 k = k + 1
@@ -106,7 +106,7 @@ while True:
                         except Exception as e:
                             print(repr(e))
                             if 'u/this_bot_is_you' in comment.body:
-                                comment.reply('Error: {}\n\n^(This bot is not fully developed, sorry for the inconvenience.)'.format(repr(e)))
+                                comment.reply('Error: {}\n\n^(I\'m shit.)'.format(repr(e)))
                             comment.mark_read()
                         print("Finished le fer")
                         j = 0
