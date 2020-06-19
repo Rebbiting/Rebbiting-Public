@@ -83,14 +83,14 @@ while True:
                             if comment.body == 'u/this_bot_is_you':
                                 rebbitor = 'this_bot_is_you'
                                 print(rebbitor)
-                            elif comment.body.lower() == 'me':
+                            elif comment.body.lower() == 'me' or comment.body.lower() == 'u/this_bot_is_you me':
                                 rebbitor = comment.author.name
                                 print(rebbitor)
                             else:
                                 rebbitor = comment.body
                                 print(rebbitor)
                         try:
-                            for commenta in reddit.redditor(rebbitor).comments.new(limit=1000):
+                            for commenta in reddit.redditor(rebbitor).comments.new(limit=500):
                                 t_body = t_body + commenta.body + '\n\n'
                                 li = li + len(commenta.body.split())
                                 k = k + 1
