@@ -90,7 +90,7 @@ while True:
                                 rebbitor = comment.body
                                 print(rebbitor)
                         try:
-                            for commenta in reddit.redditor(rebbitor).comments.new(limit=500):
+                            for commenta in reddit.redditor(rebbitor).comments.new(limit=100):
                                 t_body = t_body + commenta.body + '\n\n'
                                 li = li + len(commenta.body.split())
                                 k = k + 1
