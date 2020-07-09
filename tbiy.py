@@ -69,7 +69,7 @@ while True:
             for comment in reddit.inbox.unread(limit=25):
                 try:
                     subject = comment.subject.lower()
-                    if (subject == 'username mention' or 'comment reply' or 'post reply') and isinstance(comment,praw.models.Comment) and comment.author.name != 'this_bot_is_you':
+                    if (subject == 'username mention' or 'post reply') and isinstance(comment,praw.models.Comment) and comment.author.name != 'this_bot_is_you' and comment.author.name != 'AutoModerator':
                         t_body = ''
                         li = 0
                         k = 0
@@ -81,7 +81,10 @@ while True:
                             print(rebbitor)
                         except:
                             if comment.body == 'u/this_bot_is_you':
-                                rebbitor = 'this_bot_is_you'
+                                try:
+                                    rebbitor = comment.parent().author
+                                except:
+                                    rebbitor = 'this_bot_is_you'
                                 print(rebbitor)
                             elif comment.body.lower() == 'me' or comment.body.lower() == 'u/this_bot_is_you me':
                                 rebbitor = comment.author.name
