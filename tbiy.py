@@ -5,6 +5,13 @@ import numpy as np
 import random
 import traceback
 
+CLIENT_ID = "CLIENT_ID"
+CLIENT_SECRET = "CLIENT_SECRET"
+USER_AGENT = "Type random shit here."
+USERNAME = "USERNAME"
+PASSWORD = "PASSWORD"
+
+
 while True:
     try:
         def make_pairs(words):
@@ -18,13 +25,11 @@ while True:
             pairs = make_pairs(words)
             word_dict = {}
             cwc = 0
-            #print('My')
             for word_1, word_2 in pairs:
                 if word_1 in word_dict.keys():
                     word_dict[word_1].append(word_2)
                 else:
                     word_dict[word_1] = [word_2]
-            #print('Words')
             first_word = np.random.choice(words)
             #print("First word")
             while first_word.islower() and cwc < c_max * 1.5:
@@ -52,24 +57,25 @@ while True:
                 while ' '.join(chain).endswith(endw) == False and cwc < c_max * 1.5:
                     chain.append(np.random.choice(word_dict[chain[-1]]))
                     cwc = cwc + 1
-                    #print(cwc)
             else:
                 print('Nope')
             return ' '.join(chain)
+        
 
-        reddit = praw.Reddit(client_id = '-ey9ezFGs-EQcA',
-                             client_secret = '5uBNmWHnMmZK2ky9gVKlRo0KH0A',
-                             user_agent = 'This bot is you. Author: /u/DefaultAccount0',
-                             username = 'this_bot_is_you',
-                             password = 'this_bot_is_you')
-
+        print("Starting")
+        reddit = praw.Reddit(client_id = CLIENT_ID,
+                             client_secret = CLIENT_SECRET,
+                             user_agent = USER_AGENT,
+                             username = USERNAME,
+                             password = PASSWORD)
+        print("Logged on.")
         j = 0
         l_thread = reddit.live('1544x9tvyy6sz')
         while True:
             for comment in reddit.inbox.unread(limit=25):
                 try:
                     subject = comment.subject.lower()
-                    if (subject == 'username mention' or 'post reply') and isinstance(comment,praw.models.Comment) and comment.author.name != 'this_bot_is_you' and comment.author.name != 'AutoModerator':
+                    if (subject == 'username mention' or 'post reply') and isinstance(comment,praw.models.Comment) and comment.author.name != USERNAME and comment.author.name != 'AutoModerator':
                         t_body = ''
                         li = 0
                         k = 0
@@ -80,13 +86,13 @@ while True:
                             print('1')
                             print(rebbitor)
                         except:
-                            if comment.body == 'u/this_bot_is_you':
+                            if comment.body == USERNAME:
                                 try:
                                     rebbitor = comment.parent().author
                                 except:
-                                    rebbitor = 'this_bot_is_you'
+                                    rebbitor = USERNAME
                                 print(rebbitor)
-                            elif comment.body.lower() == 'me' or comment.body.lower() == 'u/this_bot_is_you me':
+                            elif comment.body.lower() == 'me' or comment.body.lower() == '{} me'.format(USERNAME):
                                 rebbitor = comment.author.name
                                 print(rebbitor)
                             else:
@@ -108,7 +114,7 @@ while True:
                                     print(repr(e))
                         except Exception as e:
                             print(repr(e))
-                            if 'u/this_bot_is_you' in comment.body:
+                            if USERNAME in comment.body:
                                 comment.reply('Error: {}\n\n^(I\'m shit.)'.format(repr(e)))
                             comment.mark_read()
                         print("Finished le fer")
